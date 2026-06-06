@@ -54,14 +54,22 @@ elBtnWrapper.addEventListener("click", (evt) => {
   }
 });
 
-const renderTodos = function (todos, htmlElement) {
+const renderTodos = function (todosArr, htmlElement) {
   elBtnsAll.textContent = `All ${todos.length}`;
 
-  elBtnCompleted.textContent = `Completed ${todos.filter((todo) => todo.isCompleted === true).length}`;
+  const todosIsCompleted = todosArr.filter(
+    (todo) => todo.isCompleted === true,
+  ).length;
 
-  elBtnUncompleted.textContent = `Uncompleted ${todos.filter((todo) => todo.isCompleted === false).length}`;
+  const todosUncompleted = todosArr.filter(
+    (todo) => todo.isCompleted === false,
+  ).length;
 
-  todos.forEach((todo) => {
+  elBtnCompleted.textContent = `Completed ${todosIsCompleted > 0 ? todosIsCompleted : todos.length - todosUncompleted}`;
+
+  elBtnUncompleted.textContent = `Uncompleted ${todosUncompleted > 0 ? todosUncompleted : todos.length - todosIsCompleted}`;
+
+  todosArr.forEach((todo) => {
     const newLi = document.createElement("li");
     const newCheckbox = document.createElement("input");
     const newDeleteBtn = document.createElement("button");
@@ -104,5 +112,3 @@ elForm.addEventListener("submit", (evt) => {
 
   renderTodos(todos, elList);
 });
-
-elBtnsAll.textContent = `All ${todos.length}`;
