@@ -36,12 +36,12 @@ elBtnWrapper.addEventListener("click", (evt) => {
     elList.innerHTML = null;
     renderTodos(todos, elList);
   } else if (evt.target.matches(".btns-completed")) {
-    const todosCompleted = todos.filter((todo) => todo.isCompleted === true);
+    const todosCompleted = todos.filter((todo) => todo.isCompleted);
 
     elList.innerHTML = null;
     renderTodos(todosCompleted, elList);
   } else if (evt.target.matches(".btns-uncompleted")) {
-    const todosUncompleted = todos.filter((todo) => todo.isCompleted === false);
+    const todosUncompleted = todos.filter((todo) => !todo.isCompleted);
 
     elList.innerHTML = null;
     renderTodos(todosUncompleted, elList);
@@ -51,13 +51,9 @@ elBtnWrapper.addEventListener("click", (evt) => {
 const renderTodos = function (todosArr, htmlElement) {
   elBtnsAll.textContent = `All ${todos.length}`;
 
-  const todosIsCompleted = todosArr.filter(
-    (todo) => todo.isCompleted === true,
-  ).length;
+  const todosIsCompleted = todosArr.filter((todo) => todo.isCompleted).length;
 
-  const todosUncompleted = todosArr.filter(
-    (todo) => todo.isCompleted === false,
-  ).length;
+  const todosUncompleted = todosArr.filter((todo) => !todo.isCompleted).length;
 
   elBtnCompleted.textContent = `Completed ${todosIsCompleted > 0 ? todosIsCompleted : todos.length - todosUncompleted}`;
 
