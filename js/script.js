@@ -33,21 +33,15 @@ elList.addEventListener("click", (evt) => {
 
 elBtnWrapper.addEventListener("click", (evt) => {
   if (evt.target.matches(".btns-all")) {
-    // elBtnsAll.textContent = `All ${todos.length}`;
-
     elList.innerHTML = null;
     renderTodos(todos, elList);
   } else if (evt.target.matches(".btns-completed")) {
     const todosCompleted = todos.filter((todo) => todo.isCompleted === true);
 
-    // elBtnCompleted.textContent = `Completed ${todosCompleted.length}`;
-
     elList.innerHTML = null;
     renderTodos(todosCompleted, elList);
   } else if (evt.target.matches(".btns-uncompleted")) {
     const todosUncompleted = todos.filter((todo) => todo.isCompleted === false);
-
-    // elBtnUncompleted.textContent = `Uncompleted ${todosUncompleted.length}`;
 
     elList.innerHTML = null;
     renderTodos(todosUncompleted, elList);
