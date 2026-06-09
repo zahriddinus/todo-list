@@ -2,6 +2,7 @@
 
 const elForm = document.querySelector(".form");
 const elInput = document.querySelector(".input");
+const elInputTime = document.querySelector(".input-time");
 const elList = document.querySelector(".list");
 const elBtnWrapper = document.querySelector(".btns-wrapper");
 const elBtnsAll = document.querySelector(".btns-all");
@@ -53,20 +54,40 @@ const renderTodos = function (todosArr, htmlElement) {
 
   const todosIsCompleted = todosArr.filter((todo) => todo.isCompleted).length;
 
-  const todosUncompleted = todosArr.filter((todo) => !todo.isCompleted).length;
+  const todosIsUncompleted = todosArr.filter(
+    (todo) => !todo.isCompleted,
+  ).length;
 
-  elBtnCompleted.textContent = `Completed ${todosIsCompleted > 0 ? todosIsCompleted : todos.length - todosUncompleted}`;
+  elBtnCompleted.textContent = `Completed ${todosIsCompleted > 0 ? todosIsCompleted : todos.length - todosIsUncompleted}`;
 
-  elBtnUncompleted.textContent = `Uncompleted ${todosUncompleted > 0 ? todosUncompleted : todos.length - todosIsCompleted}`;
+  elBtnUncompleted.textContent = `Uncompleted ${todosIsUncompleted > 0 ? todosIsUncompleted : todos.length - todosIsCompleted}`;
 
   todosArr.forEach((todo) => {
     const newLi = document.createElement("li");
+    const newDivLeft = document.createElement("div");
+    const newP = document.createElement("p");
+    const newTime = document.createElement("span");
+    const newDivRight = document.createElement("div");
     const newCheckbox = document.createElement("input");
     const newDeleteBtn = document.createElement("button");
 
-    newLi.textContent = todo.title;
-    newDeleteBtn.textContent = "Delete";
+    newLi.setAttribute(
+      "class",
+      "py-2 mx-1 row d-flex justify-content-between border-bottom border-2 border-warning",
+    );
+    newDivLeft.setAttribute("class", "col-9 px-0 fs-5");
+    newP.textContent = todo.title;
+    newP.setAttribute("class", "item-title m-0 d-inline-block fw-normal lh-sm");
+    newTime.textContent = ` ( ${todo.time} )`;
+    newTime.setAttribute("class", "fw-semibold text-danger");
+    newDivRight.setAttribute(
+      "class",
+      "item-decs-wrapper col-3 px-0 d-flex align-items-center justify-content-end",
+    );
     newCheckbox.type = "checkbox";
+    newCheckbox.setAttribute("class", "item-input me-2");
+    newDeleteBtn.textContent = "Delete";
+    newDeleteBtn.setAttribute("class", "py-1 btn btn-outline-danger");
 
     newDeleteBtn.classList.add("delete-btn");
     newCheckbox.classList.add("chekbox-btn");
@@ -80,17 +101,23 @@ const renderTodos = function (todosArr, htmlElement) {
     }
 
     htmlElement.appendChild(newLi);
-    newLi.appendChild(newCheckbox);
-    newLi.appendChild(newDeleteBtn);
+    newLi.appendChild(newDivLeft);
+    newDivLeft.appendChild(newP);
+    newP.appendChild(newTime);
+    newLi.appendChild(newDivRight);
+    newDivRight.appendChild(newCheckbox);
+    newDivRight.appendChild(newDeleteBtn);
   });
 };
 
 elForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   const inputValue = elInput.value;
+  const inputTimeValue = elInputTime.value;
 
   const todo = {
     title: inputValue,
+    time: inputTimeValue,
     id: todos[todos.length - 1]?.id + 1 || 0,
     isCompleted: false,
   };
@@ -98,6 +125,7 @@ elForm.addEventListener("submit", (evt) => {
   todos.push(todo);
 
   elInput.value = null;
+  elInputTime.value = null;
   elList.innerHTML = null;
 
   renderTodos(todos, elList);

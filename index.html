@@ -9,23 +9,63 @@
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="./css/main.css" />
     <title>Todos</title>
   </head>
   <body>
     <main class="main">
-      <div class="container">
-        <form class="form">
-          <input class="input" type="text" required />
+      <div class="container py-3 bg-light">
+        <div class="py-4 px-3 border border-warning rounded-3 border-3">
+          <h1
+            class="m-0 mb-3 pb-3 text-center text-warning border-bottom border-3 border-warning"
+          >
+            To Do List
+          </h1>
 
-          <button type="submit">Add</button>
-        </form>
+          <form class="form row">
+            <div class="mb-2 col-md-5 col-12">
+              <label class="form-label" for="exampleFormControlInput"
+                >What should we to do today?</label
+              >
+              <input
+                class="input form-control"
+                id="exampleFormControlInput"
+                placeholder="Writing..."
+                required
+              />
+            </div>
 
-        <ul class="list"></ul>
+            <div class="mb-2 col-md-5 col-8">
+              <label class="form-label" for="exampleFormControlInput"
+                >When should it be done?</label
+              >
+              <input class="input-time form-control" type="time" required />
+            </div>
 
-        <div class="btns-wrapper">
-          <button class="btns-all">All 0</button>
-          <button class="btns-completed">Completed 0</button>
-          <button class="btns-uncompleted">Uncompleted 0</button>
+            <div class="mb-2 col-md-2 col-4 mt-auto">
+              <button class="btn btn-warning w-100 fw-semibold" type="submit">
+                Add
+              </button>
+            </div>
+          </form>
+
+          <span
+            class="d-inline-block border border-2 border-warning w-100"
+          ></span>
+
+          <ul class="list m-0 my-2 p-0 list-unstyled"></ul>
+
+          <div class="btns-wrapper px-2 row gap-2">
+            <button class="btns-all col fw-medium btn btn-warning">
+              All 0
+            </button>
+            <button class="btns-completed col fw-medium btn btn-warning">
+              Completed 0
+            </button>
+            <button class="btns-uncompleted col fw-medium btn btn-warning">
+              Uncompleted 0
+            </button>
+          </div>
         </div>
       </div>
     </main>

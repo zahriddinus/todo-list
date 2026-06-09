@@ -1,0 +1,14 @@
+.item-decs-wrapper {
+  height: fit-content;
+}
+
+.item-input {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 768px) {
+  .item-title {
+    font-size: 1rem !important;
+  }
+}
