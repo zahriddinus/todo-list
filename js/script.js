@@ -35,9 +35,13 @@ elList.addEventListener("click", (evt) => {
 elBtnWrapper.addEventListener("click", (evt) => {
   if (evt.target.matches(".btns-all")) {
     elList.innerHTML = null;
+    console.log("All");
+
     renderTodos(todos, elList);
   } else if (evt.target.matches(".btns-completed")) {
     const todosCompleted = todos.filter((todo) => todo.isCompleted);
+
+    console.log("Comleted");
 
     elList.innerHTML = null;
     renderTodos(todosCompleted, elList);
@@ -92,18 +96,22 @@ const renderTodos = function (todosArr, htmlElement) {
     newDeleteBtn.classList.add("delete-btn");
     newCheckbox.classList.add("chekbox-btn");
 
-    newDeleteBtn.dataset.deleteId = todo.id;
     newCheckbox.dataset.chekboxId = todo.id;
+    newDeleteBtn.dataset.deleteId = todo.id;
 
     if (todo.isCompleted) {
       newCheckbox.checked = true;
-      newLi.classList.add("text-decoration-line-through");
+      newP.classList.add(
+        "text-light-emphasis",
+        "fst-italic",
+        "text-decoration-line-through",
+      );
     }
 
     htmlElement.appendChild(newLi);
     newLi.appendChild(newDivLeft);
     newDivLeft.appendChild(newP);
-    newP.appendChild(newTime);
+    newDivLeft.appendChild(newTime);
     newLi.appendChild(newDivRight);
     newDivRight.appendChild(newCheckbox);
     newDivRight.appendChild(newDeleteBtn);
