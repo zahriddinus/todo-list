@@ -4,12 +4,13 @@ const elForm = document.querySelector(".form");
 const elInput = document.querySelector(".input");
 const elInputTime = document.querySelector(".input-time");
 const elList = document.querySelector(".list");
-const elBtnWrapper = document.querySelector(".btns-wrapper");
+const elBtnsWrapper = document.querySelector(".btns-wrapper");
 const elBtnsAll = document.querySelector(".btns-all");
 const elBtnCompleted = document.querySelector(".btns-completed");
 const elBtnUncompleted = document.querySelector(".btns-uncompleted");
 
-const todos = [];
+const localData = JSON.parse(window.localStorage.getItem("todos"));
+const todos = localData || [];
 elBtnsAll.textContent = `All ${todos.length}`;
 
 elList.addEventListener("click", (evt) => {
@@ -27,21 +28,19 @@ elList.addEventListener("click", (evt) => {
 
     foundCheckboxId.isCompleted = !foundCheckboxId.isCompleted;
 
+    window.localStorage.setItem("todos", JSON.stringify(todos));
     elList.innerHTML = null;
     renderTodos(todos, elList);
   }
 });
 
-elBtnWrapper.addEventListener("click", (evt) => {
+elBtnsWrapper.addEventListener("click", (evt) => {
   if (evt.target.matches(".btns-all")) {
     elList.innerHTML = null;
-    console.log("All");
 
     renderTodos(todos, elList);
   } else if (evt.target.matches(".btns-completed")) {
     const todosCompleted = todos.filter((todo) => todo.isCompleted);
-
-    console.log("Comleted");
 
     elList.innerHTML = null;
     renderTodos(todosCompleted, elList);
@@ -56,15 +55,13 @@ elBtnWrapper.addEventListener("click", (evt) => {
 const renderTodos = function (todosArr, htmlElement) {
   elBtnsAll.textContent = `All ${todos.length}`;
 
-  const todosIsCompleted = todosArr.filter((todo) => todo.isCompleted).length;
+  const todosIsCompleted = todos.filter((todo) => todo.isCompleted).length;
 
-  const todosIsUncompleted = todosArr.filter(
-    (todo) => !todo.isCompleted,
-  ).length;
+  const todosIsUncompleted = todos.filter((todo) => !todo.isCompleted).length;
 
-  elBtnCompleted.textContent = `Completed ${todosIsCompleted > 0 ? todosIsCompleted : todos.length - todosIsUncompleted}`;
+  elBtnCompleted.textContent = `Completed ${todosIsCompleted > 0 ? todosIsCompleted : 0}`;
 
-  elBtnUncompleted.textContent = `Uncompleted ${todosIsUncompleted > 0 ? todosIsUncompleted : todos.length - todosIsCompleted}`;
+  elBtnUncompleted.textContent = `Uncompleted ${todosIsUncompleted > 0 ? todosIsUncompleted : 0}`;
 
   todosArr.forEach((todo) => {
     const newLi = document.createElement("li");
@@ -118,6 +115,8 @@ const renderTodos = function (todosArr, htmlElement) {
   });
 };
 
+renderTodos(todos, elList);
+
 elForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   const inputValue = elInput.value;
@@ -131,10 +130,10 @@ elForm.addEventListener("submit", (evt) => {
   };
 
   todos.push(todo);
+  window.localStorage.setItem("todos", JSON.stringify(todos));
 
   elInput.value = null;
   elInputTime.value = null;
   elList.innerHTML = null;
-
   renderTodos(todos, elList);
 });
